@@ -84,7 +84,7 @@
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
 
-        include 'acction/connect.php';
+        include 'action/connect.php';
 
         // ดึงข้อมูลจากตารางประเภทเกม
         $sql = "SELECT * FROM game_types";

@@ -93,7 +93,7 @@
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
 
-        include 'acction/connect.php';
+        include 'action/connect.php';
 
         // ดึงข้อมูลเกมทั้งหมด
         $sql = "SELECT * FROM games";
