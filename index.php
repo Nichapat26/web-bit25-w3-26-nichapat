@@ -10,9 +10,30 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f9f9f9;
             color: #333;
-            margin: 50px auto;
-            /* ขยายความกว้างรวมของหน้าจอให้กว้างขึ้นเป็น 1000px เหมือนกัน */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #111111;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* Container เนื้อหาเดิม */
+        .container {
             max-width: 1000px;
+            margin: 40px auto;
             padding: 0 30px;
         }
 
@@ -27,7 +48,6 @@
             margin-bottom: 35px;
         }
 
-        /* เพิ่ม Padding ให้ช่องยาวและโล่งขึ้น (บน-ล่าง 20px / ซ้าย-ขวา 28px) */
         th, td {
             padding: 20px 28px;
             text-align: left;
@@ -58,7 +78,7 @@
 
         /* Cover Image styling */
         .game-cover {
-            width: 130px; /* ขยายขนาดรูปปกขึ้นเล็กน้อยให้สมดุลกับช่องที่กว้างขึ้น */
+            width: 130px;
             height: auto;
             border-radius: 6px;
             display: block;
@@ -83,53 +103,81 @@
             background-color: #111111;
             color: #ffffff;
         }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.85rem;
+            border-top: 1px solid #edf2f7;
+            background-color: #ffffff;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
-    
-    <?php
-        // เปิดแสดง Error เพื่อความสะดวกในการดีบั๊ก
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
 
-        include 'action/connect.php';
+    <!-- 1. NAVBAR -->
+    <div class="navbar">
+        <a href="index.php" style="font-weight: bold; margin-left: 0;">คลังเกมส์</a>
+        <div>
+            <a href="index.php">หน้าหลัก</a>
+            <a href="manage_game.php">จัดการเกม</a>
+        </div>
+    </div>
 
-        // ดึงข้อมูลเกมทั้งหมด
-        $sql = "SELECT * FROM games";
-        $result = mysqli_query($con, $sql);
-    ?>
+    <!-- 2. CONTENT -->
+    <div class="container">
+        <?php
+            // เปิดแสดง Error เพื่อความสะดวกในการดีบั๊ก
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ชื่อเกม</th>
-                <th>ราคา</th>
-                <th>ภาพปก</th>
-                <th>ประเภท</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($result as $game): ?>
+            include 'action/connect.php';
+
+            // ดึงข้อมูลเกมทั้งหมด
+            $sql = "SELECT * FROM games";
+            $result = mysqli_query($con, $sql);
+        ?>
+
+        <table>
+            <thead>
                 <tr>
-                    <td><?= htmlspecialchars($game["game_id"]) ?></td>
-                    <td><strong><?= htmlspecialchars($game["game_name"]) ?></strong></td>
-                    <td><?= number_format($game["game_price"], 2) ?> บาท</td>
-                    <td> 
-                        <img 
-                            src="<?= htmlspecialchars($game["game_cover"]) ?>" 
-                            alt="<?= htmlspecialchars($game["game_name"]) ?>" 
-                            class="game-cover"
-                        > 
-                    </td>
-                    <td><?= htmlspecialchars($game["type_id"]) ?></td>
+                    <th>ID</th>
+                    <th>ชื่อเกม</th>
+                    <th>ราคา</th>
+                    <th>ภาพปก</th>
+                    <th>ประเภท</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach($result as $game): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($game["game_id"]) ?></td>
+                        <td><strong><?= htmlspecialchars($game["game_name"]) ?></strong></td>
+                        <td><?= number_format($game["game_price"], 2) ?> บาท</td>
+                        <td> 
+                            <img 
+                                src="<?= htmlspecialchars($game["game_cover"]) ?>" 
+                                alt="<?= htmlspecialchars($game["game_name"]) ?>" 
+                                class="game-cover"
+                            > 
+                        </td>
+                        <td><?= htmlspecialchars($game["type_id"]) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    <a href="game_types.php" class="btn-manage">จัดการประเภทเกม</a>
+        <a href="game_types.php" class="btn-manage">จัดการประเภทเกม</a>
+    </div>
+
+    <!-- 3. FOOTER -->
+    <div class="footer">
+        <p>ระบบคลังเกมส์ &copy; <?= date('Y') ?></p>
+    </div>
 
 </body>
 </html>

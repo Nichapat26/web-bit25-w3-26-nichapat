@@ -204,7 +204,6 @@
         </div>
     </nav>
 
-    <!-- 2. CONTENT -->
     <main class="main-content">
         <?php
         error_reporting(E_ALL);
